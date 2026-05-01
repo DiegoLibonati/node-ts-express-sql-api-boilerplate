@@ -9,7 +9,6 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction
 ): void => {
-  // eslint-disable-next-line no-console
   console.error(err.stack ?? err.message);
   res.status(500).json({ code: CODES_ERROR.generic, message: MESSAGES_ERROR.generic });
 };

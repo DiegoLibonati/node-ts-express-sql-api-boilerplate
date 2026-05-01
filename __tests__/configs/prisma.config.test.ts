@@ -17,10 +17,7 @@ describe("prisma.config", () => {
   });
 
   it("should export the same instance on repeated requires (singleton)", () => {
-    const second =
-      jest.requireActual<typeof import("@/configs/prisma.config")>(
-        "@/configs/prisma.config"
-      ).prisma;
+    const second = jest.requireActual("@/configs/prisma.config").prisma;
 
     expect(prisma).toBe(second);
   });

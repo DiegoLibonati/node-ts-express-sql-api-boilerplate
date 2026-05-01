@@ -9,7 +9,6 @@ const BASE_URL = envs.BASE_URL;
 
 const onInit = (): void => {
   const baseUrl = ENV === "development" ? `http://localhost:${PORT}` : BASE_URL;
-  // eslint-disable-next-line no-console
   console.log(`Server running in ${ENV} mode on ${baseUrl}`);
 };
 

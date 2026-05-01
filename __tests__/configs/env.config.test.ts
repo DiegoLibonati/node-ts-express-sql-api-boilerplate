@@ -21,8 +21,7 @@ describe("env.config", () => {
     process.env.NODE_ENV = "test";
     process.env.BASE_URL = "http://localhost:3000";
 
-    const { envs } =
-      jest.requireActual<typeof import("@/configs/env.config")>("@/configs/env.config");
+    const { envs } = jest.requireActual("@/configs/env.config");
 
     expect(envs.PORT).toBe(3000);
     expect(envs.ENV).toBe("test");
@@ -40,8 +39,7 @@ describe("env.config", () => {
     process.env.DB_NAME = "testdb";
     delete process.env.PORT;
 
-    const { envs } =
-      jest.requireActual<typeof import("@/configs/env.config")>("@/configs/env.config");
+    const { envs } = jest.requireActual("@/configs/env.config");
 
     expect(envs.PORT).toBe(5050);
   });
@@ -54,8 +52,7 @@ describe("env.config", () => {
     process.env.DB_NAME = "testdb";
     delete process.env.NODE_ENV;
 
-    const { envs } =
-      jest.requireActual<typeof import("@/configs/env.config")>("@/configs/env.config");
+    const { envs } = jest.requireActual("@/configs/env.config");
 
     expect(envs.ENV).toBe("development");
   });
@@ -68,8 +65,7 @@ describe("env.config", () => {
     process.env.DB_NAME = "testdb";
     delete process.env.DB_SCHEMA;
 
-    const { envs } =
-      jest.requireActual<typeof import("@/configs/env.config")>("@/configs/env.config");
+    const { envs } = jest.requireActual("@/configs/env.config");
 
     expect(envs.DATABASE_URL).toContain("?schema=public");
   });
@@ -82,8 +78,7 @@ describe("env.config", () => {
     process.env.DB_NAME = "testdb";
     delete process.env.BASE_URL;
 
-    const { envs } =
-      jest.requireActual<typeof import("@/configs/env.config")>("@/configs/env.config");
+    const { envs } = jest.requireActual("@/configs/env.config");
 
     expect(envs.BASE_URL).toBe("");
   });
@@ -95,9 +90,9 @@ describe("env.config", () => {
     process.env.DB_NAME = "testdb";
     delete process.env.DB_HOST;
 
-    expect(() =>
-      jest.requireActual<typeof import("@/configs/env.config")>("@/configs/env.config")
-    ).toThrow("Missing required environment variable: DB_HOST");
+    expect(() => {
+      jest.requireActual("@/configs/env.config");
+    }).toThrow("Missing required environment variable: DB_HOST");
   });
 
   it("should throw when DB_PORT is missing", () => {
@@ -107,9 +102,9 @@ describe("env.config", () => {
     process.env.DB_NAME = "testdb";
     delete process.env.DB_PORT;
 
-    expect(() =>
-      jest.requireActual<typeof import("@/configs/env.config")>("@/configs/env.config")
-    ).toThrow("Missing required environment variable: DB_PORT");
+    expect(() => {
+      jest.requireActual("@/configs/env.config");
+    }).toThrow("Missing required environment variable: DB_PORT");
   });
 
   it("should throw when DB_USER is missing", () => {
@@ -119,9 +114,9 @@ describe("env.config", () => {
     process.env.DB_NAME = "testdb";
     delete process.env.DB_USER;
 
-    expect(() =>
-      jest.requireActual<typeof import("@/configs/env.config")>("@/configs/env.config")
-    ).toThrow("Missing required environment variable: DB_USER");
+    expect(() => {
+      jest.requireActual("@/configs/env.config");
+    }).toThrow("Missing required environment variable: DB_USER");
   });
 
   it("should throw when DB_PASSWORD is missing", () => {
@@ -131,9 +126,9 @@ describe("env.config", () => {
     process.env.DB_NAME = "testdb";
     delete process.env.DB_PASSWORD;
 
-    expect(() =>
-      jest.requireActual<typeof import("@/configs/env.config")>("@/configs/env.config")
-    ).toThrow("Missing required environment variable: DB_PASSWORD");
+    expect(() => {
+      jest.requireActual("@/configs/env.config");
+    }).toThrow("Missing required environment variable: DB_PASSWORD");
   });
 
   it("should throw when DB_NAME is missing", () => {
@@ -143,8 +138,8 @@ describe("env.config", () => {
     process.env.DB_PASSWORD = "secret";
     delete process.env.DB_NAME;
 
-    expect(() =>
-      jest.requireActual<typeof import("@/configs/env.config")>("@/configs/env.config")
-    ).toThrow("Missing required environment variable: DB_NAME");
+    expect(() => {
+      jest.requireActual("@/configs/env.config");
+    }).toThrow("Missing required environment variable: DB_NAME");
   });
 });
