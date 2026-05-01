@@ -1,4 +1,4 @@
-# Node Express SQL Api Boilerplate
+# Node Ts Express SQL Api Boilerplate
 
 ## Educational Purpose
 
@@ -21,7 +21,7 @@ Adminer (database UI) will be available at `http://localhost:8080`.
 
 ## Description
 
-**Node Express SQL Api Boilerplate** is a production-ready starting point for building REST APIs with Node.js, Express, TypeScript, and PostgreSQL via Prisma. It is not a framework or a library — it is the foundation you clone once and stop rebuilding from scratch on every new backend project.
+**Node Ts Express SQL Api Boilerplate** is a production-ready starting point for building REST APIs with Node.js, Express, TypeScript, and PostgreSQL via Prisma. It is not a framework or a library — it is the foundation you clone once and stop rebuilding from scratch on every new backend project.
 
 **The problem it solves:** every Node.js + Express + TypeScript project starts with the same repetitive decisions — how to structure folders, how to wire up middleware, where to put types, how to handle environment variables safely, how to configure linting and formatting so they actually block bad code before it reaches the repo, and how to set up a database with migrations. This boilerplate answers all of those decisions upfront, with a consistent, lightweight architecture that scales to real applications without introducing unnecessary complexity.
 

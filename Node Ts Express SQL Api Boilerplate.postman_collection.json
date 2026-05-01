@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "Node Express SQL Api Boilerplate",
+    "name": "Node Ts Express SQL Api Boilerplate",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
