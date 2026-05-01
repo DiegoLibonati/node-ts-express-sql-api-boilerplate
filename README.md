@@ -234,7 +234,7 @@ node-ts-express-sql-api-boilerplate/
 │   ├── types/
 │   │   ├── app.ts                      # Env union type
 │   │   ├── constants.ts                # Types for code/message constant maps
-│   │   ├── datas.ts                    # Input types (NoteCreate, NoteUpdate)
+│   │   ├── payloads.ts                    # Input types (NoteCreatePayload, NoteUpdatePayload)
 │   │   ├── env.ts                      # Envs interface
 │   │   └── helpers.ts                  # ExceptionInfo interface
 │   ├── app.ts                          # Express app setup (middleware + routes)
@@ -301,7 +301,7 @@ All errors flow to `errorHandler`, a single Express error middleware registered 
 
 ### Data Transfer Object (DTO) pattern
 
-Input types (`NoteCreate`, `NoteUpdate`) are defined in `src/types/payloads.ts` and used as the contract between the controller and the service layer. Controllers sanitize raw request body data (trimming strings, filtering undefined fields) before passing it down.
+Input types (`NoteCreatePayload`, `NoteUpdatePayload`) are defined in `src/types/payloads.ts` and used as the contract between the controller and the service layer. Controllers sanitize raw request body data (trimming strings, filtering undefined fields) before passing it down.
 
 ### Graceful Shutdown
 

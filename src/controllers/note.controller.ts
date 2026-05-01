@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 
-import type { NoteUpdate } from "@/types/payloads";
+import type { NoteUpdatePayload } from "@/types/payloads";
 
 import { NoteService } from "@/services/note.service";
 
@@ -99,7 +99,7 @@ export const NoteController = {
         return;
       }
 
-      const data: NoteUpdate = {};
+      const data: NoteUpdatePayload = {};
       if (title !== undefined) data.title = title.trim();
       if (content !== undefined) data.content = content.trim();
 

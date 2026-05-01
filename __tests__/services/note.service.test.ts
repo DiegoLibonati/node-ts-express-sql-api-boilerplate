@@ -1,5 +1,5 @@
 import type { Note } from "@prisma/client";
-import type { NoteCreate, NoteUpdate } from "@/types/payloads";
+import type { NoteCreatePayload, NoteUpdatePayload } from "@/types/payloads";
 
 import { NoteService } from "@/services/note.service";
 
@@ -51,7 +51,7 @@ describe("note.service", () => {
 
   describe("createNote", () => {
     it("should create and return the note", async () => {
-      const payload: NoteCreate = { title: "Test note", content: "Test content" };
+      const payload: NoteCreatePayload = { title: "Test note", content: "Test content" };
       (NoteDAO.create as jest.Mock).mockResolvedValue(mockNote);
 
       const result: Note = await NoteService.createNote(payload);
@@ -63,7 +63,7 @@ describe("note.service", () => {
 
   describe("updateNote", () => {
     it("should update and return the note", async () => {
-      const payload: NoteUpdate = { title: "Updated title" };
+      const payload: NoteUpdatePayload = { title: "Updated title" };
       const updatedNote: Note = { ...mockNote, title: "Updated title" };
       (NoteDAO.updateById as jest.Mock).mockResolvedValue(updatedNote);
 

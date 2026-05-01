@@ -1,9 +1,9 @@
-export interface NoteCreate {
+export interface NoteCreatePayload {
   title: string;
   content: string;
 }
 
-export interface NoteUpdate {
+export interface NoteUpdatePayload {
   title?: string;
   content?: string;
 }

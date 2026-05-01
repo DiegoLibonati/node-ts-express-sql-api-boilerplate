@@ -1,13 +1,13 @@
 import { Prisma } from "@prisma/client";
 
 import type { Note } from "@prisma/client";
-import type { NoteCreate, NoteUpdate } from "@/types/payloads";
+import type { NoteCreatePayload, NoteUpdatePayload } from "@/types/payloads";
 
 import { NoteDAO } from "@/daos/note.dao";
 
 import { prisma } from "@/configs/prisma.config";
 
-const validPayload: NoteCreate = {
+const validPayload: NoteCreatePayload = {
   title: "Test note",
   content: "Test content",
 };
@@ -90,7 +90,7 @@ describe("note.dao", () => {
   describe("updateById", () => {
     it("should update the note and return the updated record", async () => {
       const created: Note = await prisma.note.create({ data: validPayload });
-      const update: NoteUpdate = { title: "Updated title" };
+      const update: NoteUpdatePayload = { title: "Updated title" };
 
       const result: Note = await NoteDAO.updateById(created.id, update);
 

@@ -2,7 +2,7 @@ import type { Note } from "@prisma/client";
 
 import { prisma } from "@/configs/prisma.config";
 
-import type { NoteCreate, NoteUpdate } from "@/types/payloads";
+import type { NoteCreatePayload, NoteUpdatePayload } from "@/types/payloads";
 
 export const NoteDAO = {
   findMany: async (): Promise<Note[]> =>
@@ -15,9 +15,9 @@ export const NoteDAO = {
       where: { id },
     }),
 
-  create: async (data: NoteCreate): Promise<Note> => await prisma.note.create({ data }),
+  create: async (data: NoteCreatePayload): Promise<Note> => await prisma.note.create({ data }),
 
-  updateById: async (id: number, data: NoteUpdate): Promise<Note> =>
+  updateById: async (id: number, data: NoteUpdatePayload): Promise<Note> =>
     await prisma.note.update({
       where: { id },
       data,
