@@ -1,10 +1,10 @@
 {
-  "name": "node-express-sql-boilerplate",
+  "name": "node-ts-express-sql-api-boilerplate",
   "version": "0.0.1",
   "engines": {
     "node": ">=22.0.0"
   },
-  "description": "Node Express SQL Boilerplate is a production-ready starting point for building REST APIs with Node.js, Express, TypeScript, and PostgreSQL via Prisma.",
+  "description": "Node Express SQL Api Boilerplate is a production-ready starting point for building REST APIs with Node.js, Express, TypeScript, and PostgreSQL via Prisma.",
   "author": {
     "name": "Diego Libonati",
     "email": "diego.libonati1998@gmail.com"
