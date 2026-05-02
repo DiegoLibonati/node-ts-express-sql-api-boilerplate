@@ -1,5 +1,4 @@
 import type { Note } from "@prisma/client";
-
 import type { NoteCreatePayload, NoteUpdatePayload } from "@/types/payloads";
 
 import { NoteDAO } from "@/daos/note.dao";

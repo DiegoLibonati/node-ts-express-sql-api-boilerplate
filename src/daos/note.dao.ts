@@ -1,8 +1,7 @@
 import type { Note } from "@prisma/client";
+import type { NoteCreatePayload, NoteUpdatePayload } from "@/types/payloads";
 
 import { prisma } from "@/configs/prisma.config";
-
-import type { NoteCreatePayload, NoteUpdatePayload } from "@/types/payloads";
 
 export const NoteDAO = {
   findMany: async (): Promise<Note[]> =>
