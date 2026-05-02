@@ -169,18 +169,20 @@ DATABASE_URL=postgresql://<user>:<password>@boilerplate-db:5432/<db>?schema=publ
 
 ## Env Keys
 
-| Key            | Description                                                |
-| -------------- | ---------------------------------------------------------- |
-| `PORT`         | Port the HTTP server listens on.                           |
-| `NODE_ENV`     | Runtime environment (`development`, `production`, `test`). |
-| `BASE_URL`     | Base URL of the API (optional).                            |
-| `DB_HOST`      | PostgreSQL host.                                           |
-| `DB_PORT`      | PostgreSQL port.                                           |
-| `DB_USER`      | PostgreSQL user.                                           |
-| `DB_PASSWORD`  | PostgreSQL password.                                       |
-| `DB_NAME`      | PostgreSQL database name.                                  |
-| `DB_SCHEMA`    | PostgreSQL schema (defaults to `public`).                  |
-| `DATABASE_URL` | Full connection string used by Prisma CLI.                 |
+| Key                   | Description                                                            |
+| --------------------- | ---------------------------------------------------------------------- |
+| `PORT`                | Port the HTTP server listens on.                                       |
+| `NODE_ENV`            | Runtime environment (`development`, `production`, `test`).             |
+| `BASE_URL`            | Base URL of the API (optional).                                        |
+| `DB_HOST`             | PostgreSQL host.                                                       |
+| `DB_PORT`             | PostgreSQL port.                                                       |
+| `DB_USER`             | PostgreSQL user.                                                       |
+| `DB_PASSWORD`         | PostgreSQL password.                                                   |
+| `DB_NAME`             | PostgreSQL database name.                                              |
+| `DB_SCHEMA`           | PostgreSQL schema (defaults to `public`).                              |
+| `DATABASE_URL`        | Full connection string used by Prisma CLI.                             |
+| `CHOKIDAR_USEPOLLING` | Enable polling for file watching (`true`/`false`). Required on Docker. |
+| `CHOKIDAR_INTERVAL`   | Polling interval in milliseconds (e.g. `100`).                         |
 
 ```bash
 PORT=5050
@@ -194,6 +196,9 @@ DB_PASSWORD=secret123
 DB_NAME=boilerplate_db
 DB_SCHEMA=public
 DATABASE_URL=postgresql://admin:secret123@boilerplate-db:5432/boilerplate_db?schema=public
+
+CHOKIDAR_USEPOLLING=true
+CHOKIDAR_INTERVAL=100
 ```
 
 ## Project Structure
