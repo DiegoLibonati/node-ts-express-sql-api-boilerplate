@@ -12,7 +12,7 @@ The main goal is to explore and demonstrate best practices, patterns, and techno
 
 1. Clone the repository:
 2. Navigate to the project folder:
-3. Copy the environment file and fill in your values:
+3. Copy the environment file and fill.
 4. Build the Docker images: docker-compose -f dev.docker-compose.yml build --no-cache
 5. Start the containers: docker-compose -f dev.docker-compose.yml up --force-recreate
 
