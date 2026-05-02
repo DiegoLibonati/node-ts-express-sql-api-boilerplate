@@ -71,7 +71,6 @@ Adminer (database UI) will be available at `http://localhost:8080`.
 "@types/morgan": "^1.9.10"
 "@types/node": "^22.0.0"
 "@types/supertest": "^6.0.2"
-"dotenv-cli": "^11.0.0"
 "eslint": "^9.0.0"
 "eslint-config-prettier": "^9.0.0"
 "eslint-plugin-prettier": "^5.0.0"
