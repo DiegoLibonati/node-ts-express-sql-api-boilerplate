@@ -34,7 +34,7 @@ Adminer (database UI) will be available at `http://localhost:8080`.
 - **Environment configuration** — individual `DB_*` variables are validated at startup via `requireEnv` and composed into a `DATABASE_URL`. Crashes fast with a clear message if any required variable is missing.
 - **Morgan** request logging — `dev` format in development, `combined` format in production.
 - **Centralized error handling** — `errorHandler` and `notFoundHandler` middlewares catch unhandled errors and missing routes consistently. Prisma's `P2025` (record not found) is mapped to HTTP 404 automatically.
-- **Jest + Supertest** — test suite configured with `ts-jest`, global setup/teardown that spins up a dedicated PostgreSQL test container via Docker Compose, and a separate `.env.test` for isolated test credentials.
+- **Jest + Supertest** — test suite configured with `ts-jest`, global setup/teardown that spins up a dedicated PostgreSQL test container via Docker Compose, and a separate `jest.env.ts` for isolated test credentials.
 - **ESLint + Prettier + Husky + lint-staged** — pre-commit hooks block commits with linting errors and auto-format staged files. No manual formatting steps required.
 
 **How to use it:**
@@ -240,7 +240,6 @@ node-ts-express-sql-api-boilerplate/
 │   ├── app.ts                          # Express app setup (middleware + routes)
 │   └── server.ts                       # HTTP server bootstrap + graceful shutdown
 ├── .env.example                        # Environment variable template
-├── .env.test                           # Environment variables for the test runner
 ├── dev.docker-compose.yml              # Development stack (server + db + adminer)
 ├── prod.docker-compose.yml             # Production stack
 ├── test.docker-compose.yml             # Isolated test database

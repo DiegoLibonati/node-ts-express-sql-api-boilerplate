@@ -6,6 +6,7 @@ const config = {
   roots: ["<rootDir>/__tests__"],
   globalSetup: "<rootDir>/__tests__/jest.globalSetup.ts",
   globalTeardown: "<rootDir>/__tests__/jest.globalTeardown.ts",
+  setupFiles: ["<rootDir>/__tests__/jest.env.ts"],
   setupFilesAfterEnv: ["<rootDir>/__tests__/jest.setup.ts"],
   testMatch: ["**/*.test.ts", "**/*.spec.ts"],
   moduleNameMapper: {
@@ -15,12 +16,7 @@ const config = {
   transform: {
     "^.+\\.ts$": ["ts-jest", { tsconfig: "tsconfig.test.json" }],
   },
-  collectCoverageFrom: [
-    "src/**/*.ts",
-    "!src/**/*.d.ts",
-    "!src/server.ts",
-    "!src/types/**/*.ts",
-  ],
+  collectCoverageFrom: ["src/**/*.ts", "!src/**/*.d.ts", "!src/server.ts", "!src/types/**/*.ts"],
   coverageDirectory: "coverage",
   coverageReporters: ["text", "lcov", "html"],
   coverageThreshold: {
