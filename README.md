@@ -6,19 +6,6 @@ This project was created primarily for **educational and learning purposes**.
 While it is well-structured and could technically be used in production, it is **not intended for commercialization**.  
 The main goal is to explore and demonstrate best practices, patterns, and technologies in software development.
 
-## Getting Started
-
-> **Requirements:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) must be installed.
-
-1. Clone the repository
-2. Navigate to the project folder
-3. Copy the environment file and fill.
-4. Build the Docker images: docker-compose -f dev.docker-compose.yml build --no-cache
-5. Start the containers: docker-compose -f dev.docker-compose.yml up --force-recreate
-
-The API will be available at `http://localhost:5050`.  
-Adminer (database UI) will be available at `http://localhost:8080`.
-
 ## Description
 
 **Node Ts Express SQL Api Boilerplate** is a production-ready starting point for building REST APIs with Node.js, Express, TypeScript, and PostgreSQL via Prisma. It is not a framework or a library — it is the foundation you clone once and stop rebuilding from scratch on every new backend project.
@@ -37,12 +24,9 @@ Adminer (database UI) will be available at `http://localhost:8080`.
 - **Jest + Supertest** — test suite configured with `ts-jest`, global setup/teardown that spins up a dedicated PostgreSQL test container via Docker Compose, and a separate `jest.env.ts` for isolated test credentials.
 - **ESLint + Prettier + Husky + lint-staged** — pre-commit hooks block commits with linting errors and auto-format staged files. No manual formatting steps required.
 
-**How to use it:**
+**How to use it as a boilerplate:**
 
-1. Clone the repository and install dependencies.
-2. Copy `.env.example` to `.env` and fill in your database credentials.
-3. Start the stack with Docker Compose — migrations run automatically.
-4. Replace the `Note` model, DAO, service, controller, and routes with your own domain logic — the folder structure, middleware setup, error handling, and tooling stay exactly as they are.
+Once the stack is up (see [Getting Started](#getting-started)), replace the `Note` model, DAO, service, controller, and routes with your own domain logic — the folder structure, middleware setup, error handling, and tooling stay exactly as they are.
 
 ## Technologies Used
 
@@ -88,85 +72,75 @@ Adminer (database UI) will be available at `http://localhost:8080`.
 "typescript-eslint": "^8.0.0"
 ```
 
-## Available Scripts
+## Getting Started
 
-| Command                  | Description                      |
-| ------------------------ | -------------------------------- |
-| `npm run dev`            | Start development server         |
-| `npm run build`          | Build for production             |
-| `npm run start`          | Start production server          |
-| `npm run type-check`     | Run TypeScript type checking     |
-| `npm run test`           | Run tests                        |
-| `npm run test:watch`     | Run tests in watch mode          |
-| `npm run test:coverage`  | Run tests with coverage          |
-| `npm run lint`           | Check for linting errors         |
-| `npm run lint:fix`       | Fix linting errors               |
-| `npm run lint:all`       | Fix linting errors (src + tests) |
-| `npm run format`         | Format code with Prettier        |
-| `npm run format:check`   | Check code formatting            |
-| `npm run format:all`     | Format code (src + tests)        |
-| `npm run migrate:dev`    | Create and apply a new migration |
-| `npm run migrate:deploy` | Apply pending migrations         |
-| `npm run db:studio`      | Open Prisma Studio               |
+> **Requirements:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) must be installed.
 
-## Portfolio Link
-
-[`https://www.diegolibonati.com.ar/#/project/node-ts-express-sql-api-boilerplate`](https://www.diegolibonati.com.ar/#/project/node-ts-express-sql-api-boilerplate)
-
-## Testing
-
-1. Navigate to the project folder
-2. Execute: `npm test`
-
-For coverage report:
-
-```bash
-npm run test:coverage
-```
-
-## Production
-
-### Build and start
-
-```bash
-docker-compose -f prod.docker-compose.yml up --build --force-recreate
-```
-
-### What the production image does differently
-
-- **Multi-stage build** — a `builder` stage compiles TypeScript (`tsc`) and resolves path aliases (`tsc-alias`), then a lean `runner` stage copies only the compiled `dist/`, production `node_modules`, and the Prisma schema. Dev dependencies are stripped with `npm prune --omit=dev`.
-- **Non-root user** — the runner stage creates a dedicated `appuser` and drops root privileges before the process starts.
-- **Automatic database sync on startup** — `entrypoint.production.sh` runs before the server. If `prisma/migrations/` contains migration files it runs `prisma migrate deploy` (applies pending migrations); otherwise it falls back to `prisma db push` (schema sync without migration history).
-- **No source maps, no hot reload** — the container runs `node dist/server.js` directly.
-- **No Adminer** — `prod.docker-compose.yml` only includes the server and the database.
-
-### Migration workflow
-
-The recommended flow before deploying to production:
-
-1. Make schema changes in `prisma/schema.prisma`.
-2. From inside the dev container, create a named migration:
+1. Clone the repository.
+2. Navigate to the project folder.
+3. Copy `.env.example` to `.env` and fill it in with your local credentials (see [Env Keys](#env-keys) for the full reference).
+4. Build the Docker images:
    ```bash
-   docker exec -it <dev-server-container> npx prisma migrate dev --name <migration-name>
+   docker-compose -f dev.docker-compose.yml build --no-cache
    ```
-3. Commit the generated files in `prisma/migrations/` to the repository.
-4. On the next production deploy, `prisma migrate deploy` will apply them automatically.
+5. Start the containers:
+   ```bash
+   docker-compose -f dev.docker-compose.yml up --force-recreate
+   ```
 
-### Environment variables
+The API will be available at `http://localhost:5050`.  
+Adminer (database UI) will be available at `http://localhost:8080`.
 
-Production reads from `.env` via `env_file` in `prod.docker-compose.yml`. Make sure the following are set with production values before deploying:
+### Useful development commands
 
-```bash
-NODE_ENV=production
-PORT=5050
-DB_HOST=boilerplate-db
-DB_USER=
-DB_PASSWORD=
-DB_NAME=
-DATABASE_URL=postgresql://<user>:<password>@boilerplate-db:5432/<db>?schema=public
-```
+These run on the host (or inside the dev container) once the stack is up:
+
+| Command                  | Description                                  |
+| ------------------------ | -------------------------------------------- |
+| `npm run dev`            | Start the development server with hot reload |
+| `npm run type-check`     | Run TypeScript type checking                 |
+| `npm run migrate:dev`    | Create and apply a new Prisma migration      |
+| `npm run migrate:deploy` | Apply pending migrations                     |
+| `npm run db:studio`      | Open Prisma Studio                           |
+
+### Pre-Commit for Development
+
+Code quality is enforced automatically via Husky + lint-staged before each commit. The hooks run ESLint with auto-fix on staged `.ts` files and format `.ts`, `.json`, and `.md` files with Prettier. Commits with linting errors are blocked.
+
+**ESLint** is configured with TypeScript strict rules (`strictTypeChecked` + `stylisticTypeChecked`):
+
+- Explicit return types required on all functions
+- No `any` type allowed
+- Consistent type imports enforced (`import type`)
+- Interfaces preferred over type aliases
+- No unused variables (args prefixed with `_` are exempt)
+- `===` required — no loose equality
+- `console` usage warns; `debugger` is an error
+- Relaxed rules inside `__tests__/` to allow unsafe assertions and `any` in test code
+
+**Prettier** is configured with:
+
+- 2 spaces indentation
+- Semicolons required
+- Double quotes
+- Trailing commas (ES5)
+- Max line width: 100 characters
+- LF line endings
+
+**Manual commands** (useful when the hook doesn't fire — e.g. CI, large refactors):
+
+| Command                | Description                      |
+| ---------------------- | -------------------------------- |
+| `npm run lint`         | Check for linting errors         |
+| `npm run lint:fix`     | Fix linting errors               |
+| `npm run lint:all`     | Fix linting errors (src + tests) |
+| `npm run format`       | Format code with Prettier        |
+| `npm run format:check` | Check code formatting            |
+| `npm run format:all`   | Format code (src + tests)        |
 
 ## Env Keys
+
+The boilerplate validates each variable at startup via `requireEnv` and crashes fast if any required one is missing.
 
 | Key                   | Description                                                            |
 | --------------------- | ---------------------------------------------------------------------- |
@@ -182,6 +156,8 @@ DATABASE_URL=postgresql://<user>:<password>@boilerplate-db:5432/<db>?schema=publ
 | `DATABASE_URL`        | Full connection string used by Prisma CLI.                             |
 | `CHOKIDAR_USEPOLLING` | Enable polling for file watching (`true`/`false`). Required on Docker. |
 | `CHOKIDAR_INTERVAL`   | Polling interval in milliseconds (e.g. `100`).                         |
+
+Example `.env` for local development:
 
 ```bash
 PORT=5050
@@ -238,7 +214,7 @@ node-ts-express-sql-api-boilerplate/
 │   ├── types/
 │   │   ├── app.ts                      # Env union type
 │   │   ├── constants.ts                # Types for code/message constant maps
-│   │   ├── payloads.ts                    # Input types (NoteCreatePayload, NoteUpdatePayload)
+│   │   ├── payloads.ts                 # Input types (NoteCreatePayload, NoteUpdatePayload)
 │   │   ├── env.ts                      # Envs interface
 │   │   └── helpers.ts                  # ExceptionInfo interface
 │   ├── app.ts                          # Express app setup (middleware + routes)
@@ -275,6 +251,8 @@ node-ts-express-sql-api-boilerplate/
 
 ## Architecture & Design Patterns
 
+The folder structure above maps directly onto a small set of explicit design choices. Each pattern below explains _why_ the corresponding folder exists.
+
 ### Layered Architecture
 
 The codebase is organized into four explicit layers, each with a single responsibility. A layer only depends on the layer directly below it — no skipping layers.
@@ -310,45 +288,25 @@ Input types (`NoteCreatePayload`, `NoteUpdatePayload`) are defined in `src/types
 
 The server listens for `SIGTERM` and `SIGINT` signals. On shutdown, it stops accepting new connections, disconnects Prisma, and exits cleanly. A 10-second safety timeout forces exit if the shutdown stalls.
 
-## Code Quality Tools
+## Testing
 
-### ESLint
+The test suite uses **Jest + Supertest** with `ts-jest`. Global setup spins up a dedicated PostgreSQL test container via `test.docker-compose.yml` and runs migrations before the suite starts; global teardown stops and removes it. Test credentials live in a separate `jest.env.ts` to keep them isolated from local development.
 
-Configured with TypeScript strict rules (`strictTypeChecked` + `stylisticTypeChecked`):
+1. Navigate to the project folder.
+2. Run the suite:
+   ```bash
+   npm test
+   ```
 
-- Explicit return types required on all functions
-- No `any` type allowed
-- Consistent type imports enforced (`import type`)
-- Interfaces preferred over type aliases
-- No unused variables (args prefixed with `_` are exempt)
-- `===` required — no loose equality
-- `console` usage warns; `debugger` is an error
-- Relaxed rules inside `__tests__/` to allow unsafe assertions and `any` in test code
+| Command                 | Description             |
+| ----------------------- | ----------------------- |
+| `npm test`              | Run tests               |
+| `npm run test:watch`    | Run tests in watch mode |
+| `npm run test:coverage` | Run tests with coverage |
 
-### Prettier
+## Security Audit
 
-Automatic code formatting on save and on commit:
-
-- 2 spaces indentation
-- Semicolons required
-- Double quotes
-- Trailing commas (ES5)
-- Max line width: 100 characters
-- LF line endings
-
-### Husky + lint-staged
-
-Pre-commit hooks that automatically:
-
-- Run ESLint with auto-fix on staged `.ts` files
-- Format `.ts`, `.json`, and `.md` files with Prettier
-- Block commits with linting errors
-
-## Security
-
-### npm audit
-
-Check for vulnerabilities in dependencies:
+Before building or deploying, check for vulnerabilities in dependencies:
 
 ```bash
 npm audit
@@ -360,6 +318,77 @@ Fix vulnerabilities automatically (when a safe upgrade exists):
 npm audit fix
 ```
 
+## Build
+
+Compile the TypeScript sources for production:
+
+```bash
+npm run build
+```
+
+This runs `tsc` (compiles `src/` into `dist/` according to `tsconfig.app.json`) followed by `tsc-alias` (rewrites `@/*` path aliases to relative paths in the emitted JavaScript so Node can resolve them at runtime without a custom loader).
+
+To start the compiled bundle locally — useful for smoke-testing the production build outside Docker:
+
+```bash
+npm run start
+```
+
+The contents of `dist/` are exactly what the production Docker image copies into its lean `runner` stage.
+
+## Production
+
+Before deploying, make sure you have completed the release pipeline:
+
+- ✅ All [tests passing](#testing)
+- ✅ A clean [security audit](#security-audit)
+- ✅ A successful [build](#build)
+- ✅ A `.env` file populated with **production values** for every key listed in [Env Keys](#env-keys)
+
+### Build and start the production stack
+
+```bash
+docker-compose -f prod.docker-compose.yml up --build --force-recreate
+```
+
+### What the production image does differently
+
+- **Multi-stage build** — a `builder` stage compiles TypeScript (`tsc`) and resolves path aliases (`tsc-alias`), then a lean `runner` stage copies only the compiled `dist/`, production `node_modules`, and the Prisma schema. Dev dependencies are stripped with `npm prune --omit=dev`.
+- **Non-root user** — the runner stage creates a dedicated `appuser` and drops root privileges before the process starts.
+- **Automatic database sync on startup** — `entrypoint.production.sh` runs before the server. If `prisma/migrations/` contains migration files it runs `prisma migrate deploy` (applies pending migrations); otherwise it falls back to `prisma db push` (schema sync without migration history).
+- **No source maps, no hot reload** — the container runs `node dist/server.js` directly.
+- **No Adminer** — `prod.docker-compose.yml` only includes the server and the database.
+
+### Migration workflow
+
+The recommended flow before deploying to production:
+
+1. Make schema changes in `prisma/schema.prisma`.
+2. From inside the dev container, create a named migration:
+   ```bash
+   docker exec -it <dev-server-container> npx prisma migrate dev --name <migration-name>
+   ```
+3. Commit the generated files in `prisma/migrations/` to the repository.
+4. On the next production deploy, `prisma migrate deploy` will apply them automatically.
+
+### Production environment values
+
+Production reads from `.env` via `env_file` in `prod.docker-compose.yml`. The full set of variables is documented in [Env Keys](#env-keys); make sure at minimum the following are set with production credentials before deploying:
+
+```bash
+NODE_ENV=production
+PORT=5050
+DB_HOST=boilerplate-db
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+DATABASE_URL=postgresql://<user>:<password>@boilerplate-db:5432/<db>?schema=public
+```
+
 ## Known Issues
 
 None at the moment.
+
+## Portfolio Link
+
+[`https://www.diegolibonati.com.ar/#/project/node-ts-express-sql-api-boilerplate`](https://www.diegolibonati.com.ar/#/project/node-ts-express-sql-api-boilerplate)
